@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Input Form</title>
+</head>
+
+<body>
+    <h2>Enter Data</h2>
+    <form id="form-inputs" action="/predict" method="post">
+
+        <div>
+            <label for="input1">avg_fre:</label>
+            <input type="text" id="input1" name="input1" step="0.01" required><br><br>
+        </div>
+
+
+        <div>
+            <label for="input2">max_fre:</label>
+            <input type="text" id="input2" name="input2" required><br><br>
+        </div>
+
+        <div>
+            <label for="input3">min_fre:</label>
+            <input type="text" id="input3" name="input3" step="0.01" required><br><br>
+        </div>
+
+        <div><label for="input4">var_fre1:</label>
+            <input type="text" id="input4" name="input4" step="0.01" required><br><br>
+        </div>
+
+        <div>
+            <label for="input5">var_fre2:</label>
+            <input type="text" id="input5" name="input5" step="0.01" required><br><br>
+        </div>
+
+        <div>
+            <label for="input6">var_fre3:</label>
+            <input type="text" id="input6" name="input6" step="0.01" required><br><br>
+        </div>
+
+        <div><label for="input7">var_fre4:</label>
+            <input type="text" id="input7" name="input7" step="0.01" required><br><br>
+        </div>
+
+        <div>
+            <label for="input8">var_fre5:</label>
+            <input type="text" id="input8" name="input8" step="0.01" required><br><br>
+        </div>
+
+        <div>
+            <label for="input9">var_amp1:</label>
+            <input type="text" id="input9" name="input9" step="0.01" required><br><br>
+        </div>
+
+        <div>
+            <label for="input10">var_amp2:</label>
+            <input type="text" id="input10" name="input10" step="0.01" required><br><br>
+        </div>
+
+        <div>
+            <label for="input11">var_amp3:</label>
+            <input type="text" id="input11" name="input11" step="0.01" required><br><br>
+        </div>
+
+        <div>
+            <label for="input12">var_amp4:</label>
+            <input type="text" id="input12" name="input12" step="0.01" required><br><br>
+        </div>
+
+        <div>
+            <label for="input13">var_amp5:</label>
+            <input type="text" id="input13" name="input13" step="0.01" required><br><br>
+        </div>
+
+        <div>
+            <label for="input14">var_amp6:</label>
+            <input type="text" id="input14" name="input14" step="0.01" required><br><br>
+        </div>
+
+        <div>
+            <label for="input15">NHR:</label>
+            <input type="text" id="input15" name="input15" step="0.01" required><br><br>
+        </div>
+
+        <div>
+            <label for="input16">HNR:</label>
+            <input type="text" id="input16" name="input16" step="0.01" required><br><br>
+        </div>
+
+        <div>
+            <label for="input17">RPDE:</label>
+            <input type="text" id="input17" name="input17" step="0.01" required><br><br>
+        </div>
+
+        <div>
+            <label for="input18">DFA:</label>
+            <input type="text" id="input18" name="input18" step="0.01" required><br><br>
+        </div>
+
+        <div>
+            <label for="input19">spread1:</label>
+            <input type="text" id="input19" name="input19" step="0.01" required><br><br>
+        </div>
+
+        <div>
+            <label for="input20">spread2:</label>
+            <input type="text" id="input20" name="input20" step="0.01" required><br><br>
+        </div>
+
+        <div><label for="input21">D2:</label>
+            <input type="text" id="input21" name="input21" step="0.01" required><br><br>
+        </div>
+        <button id="predict-btn" type="submit">Predict</button>
+    </form>
+    <script>
+        const inputs = document.querySelectorAll('input');
+
+        const predictBtn = document.getElementById('predict-btn');
+
+        let arr = [-0.34701001, 0.91569081, -0.95743329, -0.97628458, -0.94315992,
+        -0.93997856, -0.94349013, -0.88059156, -0.90797042, -0.82627119,
+        -0.88955224, -0.93414503, -0.82603672, -0.97383582, 0.31358205,
+        -0.01573332, -0.54287149, -0.70749779, -0.45356682, -0.13799654,
+        -0.781301];
+        let index = 0;
+        inputs.forEach((input) => {
+            input.value = arr[index];
+            index += 1;
+        });
+
+
+        predictBtn.addEventListener('submit', () => {
+            // Define the URL of your Flask application
+            const url = 'http://127.0.0.1:5000/predict';  // Update this URL with your actual server address
+
+            // Define the data you want to send in the POST request
+            const data = new FormData();
+            data.append('input1', 'value1');
+            data.append('input2', 'value2');
+            data.append('input3', 'value3');
+            data.append('input4', 'value4');
+            data.append('input5', 'value5');
+            data.append('input6', 'value6');
+            data.append('input7', 'value7');
+            data.append('input8', 'value8');
+            data.append('input9', 'value9');
+            data.append('input10', 'value10');
+            data.append('input11', 'value11');
+            data.append('input12', 'value12');
+            data.append('input13', 'value13');
+            data.append('input14', 'value14');
+            data.append('input15', 'value15');
+            data.append('input16', 'value16');
+            data.append('input17', 'value17');
+            data.append('input18', 'value18');
+            data.append('input19', 'value19');
+            data.append('input20', 'value20');
+            data.append('input21', 'value21');
+            // Add more key-value pairs for other input fields as needed
+            // Send the POST request using fetch
+            fetch(url, {
+                method: 'POST',
+                body: data
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('POST request was successful!');
+                    } else {
+                        console.error('Error:', response.status);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        })
+
+    </script>
+</body>
+
+</html>
