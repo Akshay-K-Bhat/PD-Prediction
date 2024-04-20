@@ -1,0 +1,71 @@
+/* Resetting default margin and padding */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* Styling header */
+header {
+  background-color: #007bff; /* Primary blue color */
+  color: #fff; /* White text color */
+  padding: 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 36px;
+}
+
+/* Styling main content */
+main {
+  padding: 20px;
+}
+
+section {
+  margin-bottom: 60px;
+}
+
+h2 {
+  color: #007bff; /* Primary blue color for section headings */
+}
+
+p {
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: green; /* Primary blue color for buttons */
+  color: #fff; /* White text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker shade of primary blue on hover */
+}
+
+/* Styling footer */
+footer {
+  background-color: #f8f9fa; /* Light gray background color */
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 90px;
+}
+
+/* Making the button responsive */
+@media (max-width: 768px) {
+  button {
+    width: 100%;
+  }
+}

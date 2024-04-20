@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='customerDetails.css') }}">
+    <title>Customer Information Form</title>
+</head>
+
+<body>
+    <header>
+        <h1>Customer Information Form</h1>
+    </header>
+    <form action="/saveUserDetails" method="post">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="age">Age:</label><br>
+        <input type="number" id="age" name="age" required><br><br>
+
+        <label for="phone">Phone Number:</label><br>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="address">Address:</label><br>
+        <textarea id="address" name="address" rows="4" required></textarea><br><br>
+
+        <input type="submit" value="Start Prediction">
+    </form>
+</body>
+<script>
+    // Assuming your form has an id of 'customerForm'
+    const form = document.getElementById('customerForm');
+
+    // Add an event listener to the form for the 'submit' event
+    form.addEventListener('submit', event => {
+        event.preventDefault(); // Prevent default form submission behavior
+
+        // Define the URL of your Flask application
+        const url = 'http://127.0.0.1:5000/saveUserDetails';
+
+        // Create a new FormData object from the form
+        const formData = new FormData(form);
+
+        // Send the POST request using fetch
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('POST request was successful!');
+                } else {
+                    console.error('Error:', response.status);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+</script>
+
+</html>
