@@ -18,16 +18,26 @@
     <p>Not Detected</p>
     {% endif %}
 
-    <button id="btn" type="submit">Back</button>
-
+    <div class="navBtn">
+        <button id="backBtn" type="submit">Back</button>
+        <button id="homeBtn" type="submit">Home</button>
+    </div>
     <script>
         // Get reference to the button
-        const btn = document.getElementById('btn');
+        const backBtn = document.getElementById('backBtn');
+        const homeBtn = document.getElementById('homeBtn');
 
         // Add event listener for button click
-        btn.addEventListener('click', function () {
+        backBtn.addEventListener('click', function () {
             // Redirect to the root URL
             window.location.href = '/form.html';
+        });
+
+
+        // Add event listener for button click
+        homeBtn.addEventListener('click', function () {
+            // Redirect to the root URL
+            window.location.href = '/';
         });
     </script>
 </body>

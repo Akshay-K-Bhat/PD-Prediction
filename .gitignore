@@ -1,0 +1,27 @@
+# Virtual environment
+venv/
+
+# IDE/Editor-specific
+.vscode/
+.idea/
+
+# Compiled files
+*.pyc
+
+# Logs and temporary data
+*.log
+__pycache__/
+
+# Dependency directories
+node_modules/
+dist/
+build/
+*.egg-info/
+
+# Environment-specific files
+.env
+
+# Sensitive files
+*.secret
+
+flask_session

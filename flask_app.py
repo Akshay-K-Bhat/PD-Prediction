@@ -1,80 +1,69 @@
-from flask import Flask, render_template, request, redirect,url_for
-import predictor
-import numpy as np
-import pymysql
-import saveUser
-from flask_mail import Mail, Message
-from datetime import date
+"""
+Flask application for Parkinson's Disease Prediction.
+"""
 
-app = Flask(__name__)
+import os
+import logging
+from flask import Flask, render_template, request, redirect, url_for, session
+from dotenv import load_dotenv
+from flask_session import Session
+import prediction
+import user_details
 
-# Connect to MySQL
-conn = pymysql.connect(host='localhost', user='root', password='VIKINGastro@17', db='prediction_data')
-cursor = conn.cursor()
+# Load environment variables from .env file
+load_dotenv()
+
+app = Flask("Parkinson's Disease Prediction")
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s: %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+
+# Configure Flask-Session for filesystem-based storage
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_PERMANENT'] = False  # Session expires when the browser is closed
+app.config['SESSION_USE_SIGNER'] = True  # Enable secure session cookie
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+Session(app)
 
 @app.route('/')
 def index():
+    """
+    Render the index page.
+    """
     return render_template('index.html')
-
 
 @app.route('/form.html')
 def form():
+    """
+    Render the form page.
+    """
     return render_template('form.html')
 
 @app.route('/customerDetails.html')
-def customerDetailsForm():
+def customer_details_form():
+    """
+    Render the customer details form page.
+    """
     return render_template('customerDetails.html')
 
-
 @app.route('/saveUserDetails', methods=['POST'])
-def saveUserDetails():
-        name = request.form['name']
-        age = int(request.form['age'])  
-        phone = request.form['phone']
-        email = request.form['email']
-        address = request.form['address']
-        diagnosis_date = date.today().isoformat()
-        print(f"Name: {name}, Age: {age}, Phone: {phone}, Email: {email}, Address: {address}")
-        print("Data received successfully!")
-        saveUser.save_user_details(name, age, phone, email, address, diagnosis_date)
-        return redirect(url_for('form'))
+def save_user_details():
+    """
+    Save user details submitted through the form.
+    """
+    user_details.save_user_details(request, session)
+    return redirect(url_for('form'))
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    data = {key: float(request.form[key]) for key in request.form}
-    values = np.array([list(data.values())])
-    print("Received data:", values)
-    model_path = "./model.pkl"
-    model = predictor.load_model(model_path)
-    if model is None:
-        print("Exiting...")
-        exit()
-    try:
-        predictions = model.predict(values)
-        print(predictions)
-
-        # Save input data and prediction result to MySQL
-        save_to_database(data, predictions[0])
-
-        return render_template('result.html', predictions=predictions[0])
-    except Exception as e:
-        print("Error making predictions:", e)
-        return "Error making predictions"
-
-def save_to_database(input_data, prediction):
-    try:
-        # Create a new record with input data, prediction, and user ID
-        sql = "INSERT INTO predictions (user_id, input_data, prediction) VALUES (%s, %s, %s)"
-        val = (user_id, str(input_data), prediction)
-        cursor.execute(sql, val)
-        conn.commit()
-        print("Data saved to database successfully!")
-    except Exception as e:
-        print("Error saving data to database:", e)
-
-
+    """
+    Perform prediction based on user input.
+    """
+    prediction_result = prediction.predict_and_send_email(request.form, session)
+    return render_template('result.html', predictions=prediction_result)
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-conn.close()
